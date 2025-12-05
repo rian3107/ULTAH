@@ -1,0 +1,219 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+/* BACKGROUND VIDEO FULLSCREEN */
+#bgVideo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    transition: opacity 0.8s ease;
+}
+
+/* FADE EFFECT */
+#bgVideo.fade {
+    opacity: 0;
+}
+
+/* LOGIN BOX */
+.login-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.45);
+    padding: 25px;
+    width: 85%;
+    max-width: 350px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    backdrop-filter: blur(8px);
+    color: white;
+    z-index: 5;
+}
+
+.login-box h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+/* INPUT */
+.login-box input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+}
+
+/* BUTTON */
+.login-box button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #ff7a36;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.login-box button:hover {
+    background: #ff8f55;
+}
+
+/* MOBILE OPTIMIZATION */
+@media (max-width: 480px) {
+    .login-box {
+        padding: 20px;
+        width: 90%;
+    }
+
+    .login-box h2 {
+        font-size: 20px;
+    }
+}
+
+/* OVERLAY AGAR TIDAK PUTIH SEBELUM VIDEO MUNCUL */
+#loadingOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #1a1a1a; /* warna gelap sunset */
+    z-index: 999;
+    transition: opacity 1s ease;
+}
+#loadingOverlay.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+/* POPUP STYLE (update: big applies to any button; add shake) */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.popup-box {
+    background: white;
+    width: 85%;
+    max-width: 350px;
+    padding: 20px;
+    border-radius: 14px;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+    color: #111;
+}
+
+.popup-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    gap: 12px;
+}
+
+.popup-buttons button {
+    flex: 1;
+    padding: 10px 14px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.25s ease, background 0.25s ease;
+}
+
+#yesBtn {
+    background: #ff6b93;
+    color: white;
+}
+
+#noBtn {
+    background: #ccc;
+}
+
+/* BIG effect now generic and styled for prominence (used for the YES button) */
+.popup-buttons button.big {
+    transform: scale(1.25);
+    box-shadow: 0 12px 30px rgba(255,107,147,0.25);
+    z-index: 30;
+}
+
+/* small shake for the No button (optional visual feedback) */
+.popup-buttons button.shake {
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-4px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: scale(0.95);}
+    to   {opacity: 1; transform: scale(1);}
+}
+/* LOADING FULLSCREEN */
+#pageLoader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000d0;
+    z-index: 9999;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: sans-serif;
+    backdrop-filter: blur(6px);
+    text-align: center;
+}
+
+/* Spinner */
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

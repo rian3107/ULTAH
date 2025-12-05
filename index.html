@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>noer imama </title>
+    <link rel="stylesheet" href="login.css">
+
+    <style>
+        /* AGAR TIDAK PERNAH PUTIH */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0d0d0f; /* gelap sunset, langsung muncul sebelum video */
+        }
+
+        /* VIDEO FULLSCREEN */
+        #bgVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* FADE TRANSISI */
+        .fade {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- VIDEO BACKGROUND -->
+    <video id="bgVideo" autoplay muted playsinline preload="auto" poster="pendukung/poster.jpg"></video>
+
+    <!-- BOX LOGIN -->
+    <div class="login-box">
+        <h2>Login menggunakan nama dan tanggal lahir kamu SAYANG</h2>
+        <input type="text" placeholder="Username">
+        <input type="password" placeholder="Password">
+        <button>Masuk</button>
+    </div>
+
+    <!-- POPUP -->
+<div id="popup" class="popup">
+    <div class="popup-box">
+        <p id="popupText">Nah bagus kamu berhasil sayang,<br>selanjutnya kamu perhatikan pelan-pelan yaa sayang.<br><br>Mau gak?</p>
+
+        <div class="popup-buttons">
+            <button id="yesBtn">Mau ❤️</button>
+            <button id="noBtn">Tidak 🙁</button>
+        </div>
+    </div>
+</div>
+
+<!-- FULLSCREEN LOADING -->
+<div id="pageLoader">
+    <div class="spinner"></div>
+    <p>tunggu sebentar ya sayang...</p>
+</div>
+
+
+
+    <script>
+        const videos = [
+            "pendukung/noer imama 1.mp4",
+            "pendukung/noer imama 2.mp4",
+            "pendukung/noer imama 3.mp4",
+            "pendukung/noer imama 4.mp4"
+        ];
+
+        let index = 0;
+        const videoElement = document.getElementById("bgVideo");
+
+        // Pasang video pertama
+        videoElement.src = videos[index];
+
+        // Paksa play secepat mungkin
+        videoElement.play().catch(() => {
+            setTimeout(() => videoElement.play(), 100);
+        });
+
+        // Fungsi ganti video
+        function switchVideo() {
+            videoElement.classList.add("fade");
+
+            setTimeout(() => {
+                index = (index + 1) % videos.length;
+                videoElement.src = videos[index];
+                videoElement.classList.remove("fade");
+                videoElement.play();
+            }, 800);
+        }
+
+        // Ganti setiap 10 detik
+        setInterval(switchVideo, 10000);
+
+
+        const btnLogin = document.querySelector(".login-box button");
+
+    btnLogin.addEventListener("click", () => {
+        const username = document.querySelector(".login-box input[type='text']").value.trim().toLowerCase();
+        const password = document.querySelector(".login-box input[type='password']").value.trim();
+
+        const validUser = "noer imama";
+        const validPass = "310109";
+
+       if (username === validUser && password === validPass) {
+    document.getElementById("popup").style.display = "flex";
+} else {
+    alert("Username atau password salah!");
+}
+
+// BUTTON POPUP (updated behavior: YES button will enlarge)
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const popupText = document.getElementById("popupText");
+const popup = document.getElementById("popup");
+
+// yes = "Mau" clicked: enlarge the button, update text, then redirect
+yesBtn.addEventListener("click", () => {
+    noBtn.classList.remove("shake");
+    yesBtn.classList.add("big");
+
+    popupText.innerHTML = "Nah bagus kamu memilih <strong>mau</strong>, sayang. Tunggu sebentar yaa... 🌅";
+
+    setTimeout(() => {
+        popup.style.display = "none";
+
+        // Tampilkan loading screen romantis
+        document.getElementById("pageLoader").style.display = "flex";
+
+        setTimeout(() => {
+            window.location.href = "dashboard.html";
+        }, 2000); // durasi loading
+    }, 800);
+});
+
+
+// no = "Tidak" clicked: do NOT enlarge; give gentle feedback text + small shake
+noBtn.addEventListener("click", () => {
+    // remove big from yesBtn if present
+    yesBtn.classList.remove("big");
+    // add shake animation to noBtn for feedback
+    noBtn.classList.add("shake");
+    // change popup text
+    popupText.innerHTML = "Kok gak mau sayang? 😢";
+    // remove shake class after animation so user can press again
+    setTimeout(() => noBtn.classList.remove("shake"), 600);
+});
+
+
+    });
+</script>
+    
+
+</body>
+</html>
